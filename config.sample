@@ -1,0 +1,10 @@
+Debug = false
+
+[Context]
+  engagement = ""
+  product = ""
+  test = ""
+
+[Setup]
+  api_base_url = "https://defectdojo.myhostname.com/api/v2"
+  token = "my token from my account"

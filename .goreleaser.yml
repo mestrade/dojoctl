@@ -1,0 +1,20 @@
+---
+project_name: dojoctl
+
+release:
+  github:
+    owner: mestrade 
+    name: dojoctl
+
+builds:
+  - main : ./
+    binary: dojoctl
+    goos:
+      - darwin
+      - linux
+      - windows
+    goarch:
+      - amd64
+    ldflags: -X main.Version={{.Version}} -X main.GitTag={{.Tag}} -X main.BuildDate={{.Date}}
+    env:
+      - CGO_ENABLED=0
