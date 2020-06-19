@@ -8,8 +8,8 @@ import (
 )
 
 var (
-	testURL   = "https://defectdojo.cloudbees.com/api/v2"
-	testToken = "aba26fae801ca07f2faea8b83ae418d51c7efd8f"
+	testURL   = "https://defectdojo.mydomain.com/api/v2"
+	testToken = "yourtokenhere"
 )
 
 func main() {
