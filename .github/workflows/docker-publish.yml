@@ -31,7 +31,7 @@ jobs:
         run: docker build . --file Dockerfile --tag $IMAGE_NAME
 
       - name: Log into registry
-        run: docker login -u ${{ github.actor }} -p ${{secrets.GITHUB_PASSWD}}
+        run: docker login -u ${{ github.actor }} -p ${{secrets.DOCKER_PASSWD}}
 
       - name: Push image
         run: |
