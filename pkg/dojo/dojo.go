@@ -35,6 +35,36 @@ type Ctx struct {
 	Debug    bool
 }
 
+func (ctx *Ctx) RetrieveCurrentProductID() error {
+	// if the context contain a product name - look for product id
+	if len(ctx.Context.CurrentProduct) > 0 {
+		product, err := ctx.ProductByName(ctx.Context.CurrentProduct)
+		if err != nil {
+			return fmt.Errorf("unable to find product: %v", err)
+		}
+
+		ctx.Context.currentProductID = product.Id
+		return nil
+	}
+
+	return fmt.Errorf("Need a valid product name")
+}
+
+func (ctx *Ctx) RetrieveCurrentEngagementID() error {
+	// if the context contain a product name - look for product id
+	if len(ctx.Context.CurrentEngagement) > 0 {
+		eng, err := ctx.EngagementByName(ctx.Context.CurrentEngagement)
+		if err != nil {
+			return fmt.Errorf("unable to find engagement: %v", err)
+		}
+
+		ctx.Context.currentEngagementID = eng.Id
+		return nil
+	}
+
+	return fmt.Errorf("Need a valid engagement name")
+}
+
 func NewDojoCtx(filename string) (*Ctx, error) {
 
 	var setupFile string
@@ -62,26 +92,6 @@ func NewDojoCtx(filename string) (*Ctx, error) {
 
 	// save setup file to save context later
 	setup.Filename = setupFile
-
-	// if the context contain a product name - look for product id
-	if len(setup.Context.CurrentProduct) > 0 {
-		product, err := setup.ProductByName(setup.Context.CurrentProduct)
-		if err != nil {
-			return nil, err
-		}
-
-		setup.Context.currentProductID = product.Id
-	}
-
-	// if the context contain an engagement name - look for engagement id
-	if len(setup.Context.CurrentEngagement) > 0 {
-		eng, err := setup.EngagementByName(setup.Context.CurrentEngagement)
-		if err != nil {
-			return nil, err
-		}
-
-		setup.Context.currentEngagementID = eng.Id
-	}
 
 	return &setup, nil
 }
