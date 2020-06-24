@@ -69,19 +69,29 @@ func NewDojoCtx(filename string) (*Ctx, error) {
 
 	var setupFile string
 
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return nil, err
+	}
+
 	if len(filename) > 0 {
 		setupFile = filename
 	} else {
-		home, err := os.UserHomeDir()
-		if err != nil {
-			return nil, err
-		}
 		setupFile = fmt.Sprintf("%s/.dojoctl/%s", home, defaultFilename)
 	}
 
 	data, err := ioutil.ReadFile(setupFile)
 	if err != nil {
 		fmt.Printf("No config file found - setup context to %s\n", setupFile)
+
+		// be sure the path is here
+		setupPath := fmt.Sprintf("%s/.dojoctl", home)
+		err := os.MkdirAll(setupPath, 0755)
+		if err != nil {
+			fmt.Printf("Unable to create setup path: %v\n", err)
+			return nil, err
+		}
+
 		new := &Ctx{Filename: setupFile}
 		return new, nil
 	}
@@ -150,7 +160,7 @@ func (ctx *Ctx) Save() error {
 	if err != nil {
 		return err
 	}
-	err = ioutil.WriteFile(ctx.Filename, data, 0600)
+	err = ioutil.WriteFile(ctx.Filename, data, 0644)
 	if err != nil {
 		fmt.Printf("Unable to save setup: %v\n", err)
 		return err
