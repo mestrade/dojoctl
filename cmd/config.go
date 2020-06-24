@@ -47,6 +47,7 @@ func configSetExec(cmd *cobra.Command, args []string) {
 			return
 		}
 		DojoCtx.Save()
+
 	case "engagement":
 
 		DojoCtx.RetrieveCurrentProductID()
@@ -57,6 +58,15 @@ func configSetExec(cmd *cobra.Command, args []string) {
 			return
 		}
 		DojoCtx.Save()
+
+	case "api":
+		DojoCtx.Setup.ApiBaseUrl = configValue
+		DojoCtx.Save()
+
+	case "token":
+		DojoCtx.Setup.Token = configValue
+		DojoCtx.Save()
+
 	}
 
 }

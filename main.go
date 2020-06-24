@@ -13,7 +13,7 @@ func main() {
 
 	cmd.DojoCtx, err = dojo.NewDojoCtx("")
 	if err != nil {
-		fmt.Printf("Unable to connect to defectdojo: %v\n", err)
+		fmt.Printf("Unable init defectdojo context: %v\n", err)
 		os.Exit(-1)
 	}
 

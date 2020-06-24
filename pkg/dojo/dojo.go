@@ -81,7 +81,9 @@ func NewDojoCtx(filename string) (*Ctx, error) {
 
 	data, err := ioutil.ReadFile(setupFile)
 	if err != nil {
-		return nil, err
+		fmt.Printf("No config file found - setup context to %s\n", setupFile)
+		new := &Ctx{Filename: setupFile}
+		return new, nil
 	}
 
 	var setup Ctx

@@ -6,12 +6,10 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 var (
 	DojoCtx *dojo.Ctx
-	cfgFile string
 
 	rootCmd = &cobra.Command{
 		Use:   "dojoctl",
@@ -28,7 +26,6 @@ func Execute() error {
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
 
 	rootCmd.AddCommand(productCmd)
 	productCmd.AddCommand(productListCmd)
@@ -50,27 +47,4 @@ func init() {
 func er(msg interface{}) {
 	fmt.Println("Error:", msg)
 	os.Exit(1)
-}
-
-func initConfig() {
-	if cfgFile != "" {
-		// Use config file from the flag.
-		viper.SetConfigFile(cfgFile)
-	} else {
-		// Find home directory.
-		home, err := os.UserHomeDir()
-		if err != nil {
-			er(err)
-		}
-
-		// Search config in home directory with name ".cobra" (without extension).
-		viper.AddConfigPath(home)
-		viper.SetConfigName(".cobra")
-	}
-
-	viper.AutomaticEnv()
-
-	if err := viper.ReadInConfig(); err == nil {
-		fmt.Println("Using config file:", viper.ConfigFileUsed())
-	}
 }
