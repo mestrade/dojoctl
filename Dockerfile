@@ -9,7 +9,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -tags netgo -o dojoctl .
  
 
 
-FROM scratch 
+FROM busybox 
 
 COPY --from=builder app/dojoctl dojoctl
 
