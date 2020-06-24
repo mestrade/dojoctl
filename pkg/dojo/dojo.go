@@ -152,6 +152,7 @@ func (ctx *Ctx) Save() error {
 	}
 	err = ioutil.WriteFile(ctx.Filename, data, 0600)
 	if err != nil {
+		fmt.Printf("Unable to save setup: %v\n", err)
 		return err
 	}
 
